@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcha Kinolar — StreamVibe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #0f0f0f; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
+
+        /* ── Header ── */
+        .site-header {
+            background-color: rgba(10,10,10,0.97);
+            border-bottom: 1px solid #1f1f1f;
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .logo a { color: #fff; font-size: 22px; font-weight: bold; text-decoration: none; }
+        .logo a span { color: #e50000; }
+        .nav-container { background: #060606; border: 1px solid #1f1f1f; border-radius: 12px; padding: 6px; }
+        .nav-menu { display: flex; list-style: none; gap: 5px; }
+        .nav-link { color: #bfbfbf; text-decoration: none; font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: 8px; transition: all 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #fff; background: #1a1a1a; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .icon-btn { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; padding: 6px; }
+        .icon-btn:hover { color: #e50000; }
+        #cart-count { position: absolute; top: -4px; right: -4px; background: #e50000; font-size: 10px; padding: 2px 6px; border-radius: 50%; font-weight: bold; }
+        .icon-btn { position: relative; }
+        .auth-btn { background: #e50000; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; border: none; color: #fff; transition: 0.3s; }
+        .auth-btn:hover { background: #b30000; }
+        .user-profile { display: flex; align-items: center; gap: 8px; background: #141414; padding: 6px 12px; border-radius: 20px; border: 1px solid #262626; }
+        .logout-btn { background: transparent; border: none; color: #757575; cursor: pointer; }
+
+        /* ── Page Hero ── */
+        .page-hero {
+            padding: 60px 40px 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .page-hero h1 { font-size: 36px; font-weight: bold; }
+        .page-hero h1 span { color: #e50000; }
+        .results-info { color: #666; font-size: 14px; }
+        .results-info b { color: #fff; }
+
+        /* ── Filter Section ── */
+        .filter-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px 32px;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 4px 18px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        .search-bar:focus-within { border-color: #e50000; box-shadow: 0 0 0 3px rgba(229,0,0,0.08); }
+        .search-bar i { color: #555; font-size: 16px; margin-right: 12px; }
+        .search-bar input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 15px; padding: 10px 0; }
+        .search-bar input::placeholder { color: #444; }
+        .search-clear { background: none; border: none; color: #444; cursor: pointer; padding: 4px 8px; font-size: 15px; display: none; }
+        .search-clear.visible { display: block; }
+        .search-clear:hover { color: #e50000; }
+        .voice-btn {
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            padding: 6px 10px;
+            font-size: 16px;
+            border-left: 1px solid #262626;
+            margin-left: 4px;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+        .voice-btn:hover { color: #fff; }
+        .voice-btn.listening {
+            color: #e50000;
+            animation: voicePulse 0.9s ease-in-out infinite alternate;
+        }
+        @keyframes voicePulse {
+            from { opacity: 0.5; transform: scale(0.92); }
+            to   { opacity: 1;   transform: scale(1.12); }
+        }
+        .voice-status {
+            font-size: 12px;
+            color: #e50000;
+            margin-top: 6px;
+            min-height: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-left: 4px;
+        }
+        .voice-status.hidden { visibility: hidden; }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .filter-select {
+            background: #141414;
+            border: 1px solid #262626;
+            color: #fff;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .filter-select:focus, .filter-select:hover { border-color: #e50000; }
+        .filter-select option { background: #141414; }
+
+        .rating-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 8px;
+            padding: 9px 14px;
+            font-size: 13px;
+        }
+        .rating-filter label { color: #888; white-space: nowrap; }
+        .rating-slider { width: 100px; accent-color: #e50000; cursor: pointer; }
+        #rating-val { color: #fff; font-weight: bold; min-width: 28px; }
+
+        .active-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1a1a1a;
+            border: 1px solid #e50000;
+            color: #fff;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+        }
+        .filter-chip button { background: none; border: none; color: #e50000; cursor: pointer; padding: 0; font-size: 13px; line-height: 1; }
+
+        .cats-wrap {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        .cat-btn {
+            background: #141414;
+            border: 1px solid #262626;
+            color: #aaa;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .cat-btn:hover { border-color: #555; color: #fff; }
+        .cat-btn.active { background: #e50000; border-color: #e50000; color: #fff; font-weight: bold; }
+
+        /* ── Movies Grid ── */
+        .movies-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+        .movie-card {
+            background: #141414;
+            border: 1px solid #1f1f1f;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25,1,0.5,1);
+            display: flex;
+            flex-direction: column;
+        }
+        .movie-card:hover { border-color: #e50000; transform: translateY(-6px); box-shadow: 0 12px 28px rgba(229,0,0,0.18); }
+        .movie-card-img-wrap { position: relative; overflow: hidden; min-height: 140px; background: #1a1a1a; }
+        .movie-card img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.4s ease; background: #1a1a1a; }
+        .movie-card:hover img { transform: scale(1.05); }
+        .movie-card-img-wrap::before {
+            content: '\f008';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            color: #2a2a2a;
+            pointer-events: none;
+        }
+        .card-rating {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: rgba(0,0,0,0.75);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #f5c518;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .movie-card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .movie-card-title { font-size: 14px; font-weight: 600; color: #fff; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.4; }
+        .movie-card-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #555; }
+        .movie-card-meta span { display: flex; align-items: center; gap: 4px; }
+        .movie-card-cats { display: flex; gap: 4px; flex-wrap: wrap; }
+        .cat-tag { background: #1f1f1f; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #777; }
+        .card-detail-btn {
+            margin-top: auto;
+            background: #1c1c1c;
+            border: 1px solid #262626;
+            color: #ccc;
+            padding: 9px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s;
+        }
+        .card-detail-btn:hover { background: #e50000; border-color: #e50000; color: #fff; }
+
+        /* ── No Results ── */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            color: #444;
+        }
+        .no-results i { font-size: 56px; display: block; margin-bottom: 16px; color: #2a2a2a; }
+        .no-results p { font-size: 16px; }
+
+        /* ── Pagination ── */
+        .pagination-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 20px 0 60px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            background: #141414;
+            border: 1px solid #262626;
+            color: #aaa;
+            width: 40px; height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .page-btn:hover:not(:disabled) { border-color: #e50000; color: #fff; }
+        .page-btn.active { background: #e50000; border-color: #e50000; color: #fff; font-weight: bold; }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-dots { color: #444; padding: 0 4px; }
+
+        /* ── Detail Modal ── */
+        #movie-detail-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+        #movie-detail-modal.open { display: flex; }
+        .movie-detail-box {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 860px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn { from { opacity:0; transform:scale(0.92) } to { opacity:1; transform:scale(1) } }
+        .movie-detail-poster { width: 300px; min-width: 300px; object-fit: cover; border-radius: 16px 0 0 16px; background: #1a1a1a; }
+        .movie-detail-info { padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+        .movie-detail-title { font-size: 24px; font-weight: bold; line-height: 1.3; }
+        .movie-detail-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+        .meta-badge { background: #1f1f1f; border: 1px solid #2e2e2e; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #aaa; }
+        .meta-badge.rating { background: #e50000; border-color: #e50000; color: #fff; font-weight: bold; }
+        .meta-badge.imdb { background: #f5c518; border-color: #f5c518; color: #000; font-weight: bold; }
+        .movie-detail-desc { color: #999; font-size: 13px; line-height: 1.75; flex: 1; overflow-y: auto; max-height: 180px; }
+        .movie-detail-desc::-webkit-scrollbar { width: 3px; }
+        .movie-detail-desc::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        .movie-detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+        .btn-add-modal { background: #e50000; border: none; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; flex: 1; transition: background 0.3s; min-width: 140px; }
+        .btn-add-modal:hover { background: #b30000; }
+        .btn-add-modal.added { background: #1a7a1a; }
+        .btn-trailer { background: #1f1f1f; border: 1px solid #333; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; flex: 1; text-decoration: none; text-align: center; transition: all 0.3s; min-width: 140px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-trailer:hover { background: #ff0000; border-color: #ff0000; color: #fff; }
+        .btn-imdb { background: #f5c518; border: none; color: #000; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-imdb:hover { background: #d4a800; color: #000; }
+        .btn-close-detail {
+            position: absolute;
+            top: 14px; right: 16px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid #333;
+            color: #ccc;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            line-height: 1;
+            z-index: 1;
+        }
+        .btn-close-detail:hover { background: #e50000; border-color: #e50000; color: #fff; }
+
+        /* ── Cart Sidebar ── */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3500; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; backdrop-filter: blur(3px); }
+        .cart-overlay.open { opacity: 1; pointer-events: auto; }
+        .cart-sidebar { position: fixed; top: 0; right: 0; width: 380px; height: 100%; background: #111; border-left: 1px solid #222; z-index: 3600; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow: -10px 0 40px rgba(0,0,0,0.6); }
+        .cart-sidebar.open { transform: translateX(0); }
+        .cart-sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; border-bottom: 1px solid #222; flex-shrink: 0; }
+        .cart-sidebar-header h3 { font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+        .cart-badge { background: #e50000; color: #fff; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 20px; min-width: 22px; text-align: center; }
+        .cart-close-btn { background: #1f1f1f; border: 1px solid #2a2a2a; color: #aaa; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; line-height: 1; }
+        .cart-close-btn:hover { background: #e50000; border-color: #e50000; color: #fff; }
+        .cart-items-wrap { flex: 1; overflow-y: auto; padding: 16px 24px; }
+        .cart-items-wrap::-webkit-scrollbar { width: 4px; }
+        .cart-items-wrap::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 14px; color: #555; }
+        .cart-empty i { font-size: 52px; color: #2a2a2a; }
+        .cart-empty p { font-size: 14px; }
+        .cart-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid #1e1e1e; }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item-thumb { width: 60px; height: 80px; object-fit: cover; border-radius: 8px; background: #1a1a1a; flex-shrink: 0; }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cart-item-genre { font-size: 12px; color: #666; margin-top: 4px; }
+        .cart-item-remove { background: #1a1a1a; border: 1px solid #2a2a2a; color: #666; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; transition: all 0.2s; }
+        .cart-item-remove:hover { background: #e50000; border-color: #e50000; color: #fff; }
+        .cart-sidebar-footer { padding: 20px 24px; border-top: 1px solid #222; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; }
+        .cart-total-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #888; }
+        .cart-total-row span:last-child { color: #fff; font-weight: bold; font-size: 15px; }
+        .cart-checkout-btn { background: #e50000; border: none; color: #fff; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; display: block; transition: background 0.3s; }
+        .cart-checkout-btn:hover { background: #b30000; color: #fff; }
+        .cart-checkout-btn.disabled { background: #2a2a2a; color: #555; cursor: not-allowed; pointer-events: none; }
+
+        /* ── Login Modal ── */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-content { background: #141414; border: 1px solid #262626; padding: 30px; border-radius: 12px; width: 100%; max-width: 400px; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 20px; cursor: pointer; color: #999; background: none; border: none; }
+        .modal input { width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #262626; border-radius: 6px; color: #fff; margin-bottom: 15px; outline: none; }
+
+        /* ── Footer ── */
+        .site-footer { background: #0c0c0c; border-top: 1px solid #1f1f1f; padding: 50px 40px 20px; margin-top: 60px; }
+        .footer-main { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(6,1fr); gap: 30px; padding-bottom: 40px; border-bottom: 1px solid #1f1f1f; }
+        .footer-column h4 { font-size: 16px; color: #fff; margin-bottom: 20px; font-weight: bold; }
+        .footer-column ul { list-style: none; padding: 0; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #999; text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .footer-column ul li a:hover { color: #fff; }
+        .social-icons { display: flex; gap: 12px; }
+        .social-btn { background: #141414; border: 1px solid #262626; color: #fff; width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 18px; transition: all 0.3s; }
+        .social-btn:hover { background: #e50000; border-color: #e50000; color: #fff; }
+        .footer-bottom { max-width: 1300px; margin: 0 auto; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; color: #757575; font-size: 13px; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { color: #757575; text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: #fff; }
+
+        /* ── Responsive ── */
+        @media (max-width: 1100px) { .movies-grid { grid-template-columns: repeat(3,1fr); } }
+        @media (max-width: 768px) {
+            .site-header { flex-direction: column; gap: 14px; padding: 14px 16px; }
+            .movies-grid { grid-template-columns: repeat(2,1fr); }
+            .filter-section, .movies-section, .page-hero { padding-left: 16px; padding-right: 16px; }
+            .footer-main { grid-template-columns: repeat(3,1fr); }
+            .movie-detail-box { flex-direction: column; }
+            .movie-detail-poster { width: 100%; min-width: unset; border-radius: 16px 16px 0 0; max-height: 260px; }
+            .cart-sidebar { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .movies-grid { grid-template-columns: 1fr; }
+            .footer-main { grid-template-columns: repeat(2,1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header">
+    <div class="logo">
+        <a href="./index.html"><img src="./Logo.png" alt="StreamVibe" style="height:36px;"></a>
+    </div>
+    <nav class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="./index.html" class="nav-link">Bosh sahifa</a></li>
+            <li><a href="./movie.html" class="nav-link active">Barcha Kinolar</a></li>
+            <li><a href="./index.html#faq" class="nav-link">Qo'llab-quvvatlash</a></li>
+            <li><a href="./index.html#pricing" class="nav-link">Tariflar</a></li>
+
+        </ul>
+    </nav>
+    <div class="header-right">
+        <button id="cart-trigger" class="icon-btn" title="Savat">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span id="cart-count">0</span>
+        </button>
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+        <div id="login-trigger" class="auth-btn">Kirish</div>
+        <div id="user-display" class="user-profile" style="display:none;">
+            <i class="fa-solid fa-user"></i>
+            <span id="user-name-text">Ism</span>
+            <button id="logout-trigger" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </div>
+</header>
+
+<!-- ── Page Hero ── -->
+<div class="page-hero">
+    <div>
+        <h1>Barcha <span>Kinolar</span></h1>
+        <p style="color:#666; font-size:14px; margin-top:6px;">movie.js ma'lumotlar bazasidagi barcha kinolar</p>
+    </div>
+    <div class="results-info">
+        Topildi: <b id="result-count">0</b> ta kino
+    </div>
+</div>
+
+<!-- ── Filter Section ── -->
+<div class="filter-section">
+    <!-- Search bar -->
+    <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass" style="flex-shrink:0;"></i>
+        <input type="text" id="main-search" placeholder="Kino nomini kiriting...">
+        <button class="search-clear" id="search-clear-btn" title="Tozalash"><i class="fa-solid fa-xmark"></i></button>
+        <button class="voice-btn" id="voice-btn" title="Ovozli qidiruv">
+            <i class="fa-solid fa-microphone"></i>
+        </button>
+    </div>
+    <div class="voice-status" id="voice-status"></div>
+
+    <!-- Controls row -->
+    <div class="controls-row">
+        <select class="filter-select" id="sort-select">
+            <option value="rating_desc">Reyting ↓ (Yuqori)</option>
+            <option value="rating_asc">Reyting ↑ (Past)</option>
+            <option value="year_desc">Yil ↓ (Yangi)</option>
+            <option value="year_asc">Yil ↑ (Eski)</option>
+            <option value="title_asc">Nom A–Z</option>
+            <option value="title_desc">Nom Z–A</option>
+        </select>
+
+        <select class="filter-select" id="year-select">
+            <option value="">Barcha yillar</option>
+        </select>
+
+        <div class="rating-filter">
+            <label><i class="fa-solid fa-star" style="color:#f5c518;"></i> Min reyting:</label>
+            <input type="range" class="rating-slider" id="rating-slider" min="0" max="10" step="0.5" value="0">
+            <span id="rating-val">0</span>
+        </div>
+
+        <button id="reset-filters-btn" style="background:#1a1a1a; border:1px solid #333; color:#888; padding:9px 16px; border-radius:8px; cursor:pointer; font-size:13px; transition:all 0.2s;" onmouseover="this.style.borderColor='#e50000';this.style.color='#fff'" onmouseout="this.style.borderColor='#333';this.style.color='#888'">
+            <i class="fa-solid fa-rotate-left"></i> Tozalash
+        </button>
+    </div>
+
+    <!-- Active filter chips -->
+    <div class="active-filters" id="active-filters"></div>
+
+    <!-- Category buttons -->
+    <div class="cats-wrap" id="cats-wrap"></div>
+</div>
+
+<!-- ── Movies Grid ── -->
+<div class="movies-section">
+    <div class="movies-grid" id="movies-grid">
+        <div class="no-results">
+            <i class="fa-solid fa-film"></i>
+            <p>Kinolar yuklanmoqda...</p>
+        </div>
+    </div>
+    <div class="pagination-wrap" id="pagination"></div>
+</div>
+
+<!-- ── Footer ── -->
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="footer-column">
+            <h4>Home</h4>
+            <ul>
+                <li><a href="./index.html">Bosh sahifa</a></li>
+                <li><a href="./movie.html">Kinolar</a></li>
+                <li><a href="./index.html#pricing">Tariflar</a></li>
+                <li><a href="./index.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Movies</h4>
+            <ul>
+                <li><a href="#">Janrlar</a></li>
+                <li><a href="#">Trenddagi</a></li>
+                <li><a href="#">Yangi</a></li>
+                <li><a href="#">Mashhur</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Shows</h4>
+            <ul>
+                <li><a href="#">Janrlar</a></li>
+                <li><a href="#">Trenddagi</a></li>
+                <li><a href="#">Yangi</a></li>
+                <li><a href="#">Mashhur</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Support</h4>
+            <ul><li><a href="#">Bog'lanish</a></li></ul>
+        </div>
+        <div class="footer-column">
+            <h4>Subscription</h4>
+            <ul>
+                <li><a href="./index.html#pricing">Tariflar</a></li>
+                <li><a href="#">Imkoniyatlar</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Connect With Us</h4>
+            <div class="social-icons">
+                <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div>©2026 StreamVibe, All Rights Reserved</div>
+        <div class="footer-links">
+            <a href="#">Terms of Use</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookie Policy</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ── Cart Sidebar ── -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-sidebar-header">
+        <h3><i class="fa-solid fa-basket-shopping"></i> Savatingiz <span class="cart-badge" id="cart-sidebar-count">0</span></h3>
+        <button class="cart-close-btn" id="close-cart-sidebar">&times;</button>
+    </div>
+    <div class="cart-items-wrap" id="cart-items-list"></div>
+    <div class="cart-sidebar-footer">
+        <div class="cart-total-row">
+            <span>Jami filmlar:</span>
+            <span id="cart-footer-count">0 ta</span>
+        </div>
+        <a href="./index2.html" class="cart-checkout-btn disabled" id="cart-checkout-btn">
+            To'lovga o'tish &rarr;
+        </a>
+    </div>
+</div>
+
+<!-- ── Login Modal ── -->
+<div id="login-modal" class="modal">
+    <div class="modal-content">
+        <button id="close-login" class="close-modal">&times;</button>
+        <h3 style="margin-bottom:20px;">Tizimga kirish</h3>
+        <input type="text" id="username-input" placeholder="Ismingizni kiriting..." required>
+        <button id="login-submit-btn" class="auth-btn" style="width:100%;">Kirish</button>
+    </div>
+</div>
+
+<!-- ── Movie Detail Modal ── -->
+<div id="movie-detail-modal">
+    <div class="movie-detail-box">
+        <button class="btn-close-detail" id="close-detail-modal">&times;</button>
+        <img id="detail-poster" class="movie-detail-poster" src="" alt="">
+        <div class="movie-detail-info">
+            <div class="movie-detail-title" id="detail-title"></div>
+            <div class="movie-detail-meta" id="detail-meta"></div>
+            <p class="movie-detail-desc" id="detail-desc"></p>
+            <div class="movie-detail-actions">
+                <button class="btn-add-modal" id="detail-add-btn">
+                    <i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish
+                </button>
+                <a class="btn-trailer" id="detail-trailer-btn" href="#" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-youtube"></i> Treyler
+                </a>
+                <a class="btn-imdb" id="detail-imdb-btn" href="#" target="_blank" rel="noopener">
+                    IMDb
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Scripts ── -->
+<script src="./movie.js"></script>
+<script>
+const MOVIES_PER_PAGE = 24;
+
+// ── YouTube thumbnail helpers ──
+function getYtId(movie) {
+    const url = movie.movie_youtube_id || '';
+    const m = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
+    return m ? m[1] : null;
+}
+
+function getThumbnail(movie) {
+    const id = getYtId(movie);
+    // hqdefault (480×360) — YouTube ning har doim mavjud formati
+    if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    return movie.movie_medium_image || movie.movie_max_image || '';
+}
+
+function getFallbackThumb(movie) {
+    const id = getYtId(movie);
+    // default (120×90) — har qanday video uchun kafolatlangan
+    if (id) return `https://img.youtube.com/vi/${id}/default.jpg`;
+    return '';
+}
+
+// ── State ──
+let state = {
+    search: '',
+    categories: new Set(),
+    minRating: 0,
+    year: '',
+    sort: 'rating_desc',
+    page: 1
+};
+let filteredMovies = [];
+
+// ── Cart ──
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+cart = cart.map(i => typeof i === 'string' ? { title: i, img: '', genre: '' } : i);
+
+function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+function isInCart(title) { return cart.some(i => i.title === title); }
+
+const cartCount       = document.getElementById('cart-count');
+const cartSidebarCount = document.getElementById('cart-sidebar-count');
+const cartFooterCount  = document.getElementById('cart-footer-count');
+const cartCheckoutBtn  = document.getElementById('cart-checkout-btn');
+const cartItemsList    = document.getElementById('cart-items-list');
+const cartSidebar      = document.getElementById('cart-sidebar');
+const cartOverlay      = document.getElementById('cart-overlay');
+
+function updateCartUI() {
+    const n = cart.length;
+    cartCount.textContent = n;
+    cartSidebarCount.textContent = n;
+    cartFooterCount.textContent = n + ' ta';
+    cartCheckoutBtn.classList.toggle('disabled', n === 0);
+
+    if (n === 0) {
+        cartItemsList.innerHTML = `<div class="cart-empty"><i class="fa-solid fa-basket-shopping"></i><p>Savat bo'sh</p></div>`;
+        return;
+    }
+    cartItemsList.innerHTML = cart.map((item, idx) => `
+        <div class="cart-item">
+            <img class="cart-item-thumb" src="${item.img}" alt="${item.title}"
+                 onerror="this.style.background='#2a2a2a';this.removeAttribute('src')">
+            <div class="cart-item-info">
+                <div class="cart-item-name">${item.title}</div>
+                <div class="cart-item-genre">${item.genre || ''}</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${idx})">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>`).join('');
+}
+
+window.removeFromCart = function(idx) {
+    cart.splice(idx, 1);
+    saveCart();
+    updateCartUI();
+    if (currentMovie && !isInCart(currentMovie.title)) {
+        detailAddBtn.innerHTML = '<i class="fa-solid fa-basket-shopping"></i> Savatga qo\'shish';
+        detailAddBtn.className = 'btn-add-modal';
+    }
+};
+
+document.getElementById('cart-trigger').addEventListener('click', () => {
+    cartSidebar.classList.add('open');
+    cartOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+});
+function closeCart() {
+    cartSidebar.classList.remove('open');
+    cartOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.getElementById('close-cart-sidebar').addEventListener('click', closeCart);
+cartOverlay.addEventListener('click', closeCart);
+updateCartUI();
+
+// ── Login ──
+const loginTrigger   = document.getElementById('login-trigger');
+const userDisplay    = document.getElementById('user-display');
+const userNameText   = document.getElementById('user-name-text');
+const logoutTrigger  = document.getElementById('logout-trigger');
+const loginModal     = document.getElementById('login-modal');
+const savedName = localStorage.getItem('username');
+if (savedName) { loginTrigger.style.display='none'; userDisplay.style.display='flex'; userNameText.textContent=savedName; }
+
+loginTrigger.addEventListener('click', () => loginModal.style.display = 'flex');
+document.getElementById('close-login').addEventListener('click', () => loginModal.style.display = 'none');
+document.getElementById('login-submit-btn').addEventListener('click', () => {
+    const name = document.getElementById('username-input').value.trim();
+    if (name) {
+        localStorage.setItem('username', name);
+        loginTrigger.style.display = 'none';
+        userDisplay.style.display = 'flex';
+        userNameText.textContent = name;
+        loginModal.style.display = 'none';
+    }
+});
+logoutTrigger.addEventListener('click', () => {
+    localStorage.removeItem('username');
+    userDisplay.style.display = 'none';
+    loginTrigger.style.display = 'block';
+});
+
+// ── Extract unique categories & years ──
+function getUniqueCategories() {
+    const set = new Set();
+    movies.forEach(m => m.categories.split('|').forEach(c => {
+        c = c.trim();
+        if (c && c !== 'Uncategorized') set.add(c);
+    }));
+    return [...set].sort();
+}
+
+function getUniqueYears() {
+    const set = new Set(movies.map(m => m.movie_year).filter(Boolean));
+    return [...set].sort((a, b) => b - a);
+}
+
+// ── Build category buttons ──
+const allCategories = getUniqueCategories();
+const catsWrap = document.getElementById('cats-wrap');
+
+allCategories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.textContent = cat;
+    btn.addEventListener('click', () => {
+        if (state.categories.has(cat)) {
+            state.categories.delete(cat);
+            btn.classList.remove('active');
+        } else {
+            state.categories.add(cat);
+            btn.classList.add('active');
+        }
+        applyFilters();
+    });
+    catsWrap.appendChild(btn);
+});
+
+// ── Build year select ──
+const yearSelect = document.getElementById('year-select');
+getUniqueYears().forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    yearSelect.appendChild(opt);
+});
+
+// ── Filters ──
+function applyFilters() {
+    const q = state.search.toLowerCase().trim();
+
+    filteredMovies = movies.filter(m => {
+        if (q && !m.title.toLowerCase().includes(q) && !(m.summary||'').toLowerCase().includes(q)) return false;
+        if (state.categories.size > 0) {
+            const mc = m.categories.split('|').map(c => c.trim());
+            if (![...state.categories].some(c => mc.includes(c))) return false;
+        }
+        if (m.imdb_rating < state.minRating) return false;
+        if (state.year && m.movie_year != state.year) return false;
+        return true;
+    });
+
+    filteredMovies.sort((a, b) => {
+        if (state.sort === 'rating_desc') return (b.imdb_rating||0) - (a.imdb_rating||0);
+        if (state.sort === 'rating_asc')  return (a.imdb_rating||0) - (b.imdb_rating||0);
+        if (state.sort === 'year_desc')   return (b.movie_year||0)   - (a.movie_year||0);
+        if (state.sort === 'year_asc')    return (a.movie_year||0)   - (b.movie_year||0);
+        if (state.sort === 'title_asc')   return a.title.localeCompare(b.title);
+        if (state.sort === 'title_desc')  return b.title.localeCompare(a.title);
+        return 0;
+    });
+
+    state.page = 1;
+    document.getElementById('result-count').textContent = filteredMovies.length.toLocaleString();
+    renderActiveFilters();
+    renderMovies();
+    renderPagination();
+}
+
+// ── Active filter chips ──
+function renderActiveFilters() {
+    const wrap = document.getElementById('active-filters');
+    wrap.innerHTML = '';
+
+    if (state.search) addChip(wrap, `"${state.search}"`, () => { state.search=''; document.getElementById('main-search').value=''; document.getElementById('search-clear-btn').classList.remove('visible'); applyFilters(); });
+    if (state.minRating > 0) addChip(wrap, `Reyting ≥ ${state.minRating}`, () => { state.minRating=0; document.getElementById('rating-slider').value=0; document.getElementById('rating-val').textContent='0'; applyFilters(); });
+    if (state.year) addChip(wrap, `Yil: ${state.year}`, () => { state.year=''; document.getElementById('year-select').value=''; applyFilters(); });
+    state.categories.forEach(cat => {
+        addChip(wrap, cat, () => {
+            state.categories.delete(cat);
+            document.querySelectorAll('.cat-btn').forEach(b => { if (b.textContent === cat) b.classList.remove('active'); });
+            applyFilters();
+        });
+    });
+}
+
+function addChip(wrap, label, onRemove) {
+    const chip = document.createElement('div');
+    chip.className = 'filter-chip';
+    chip.innerHTML = `<span>${label}</span><button title="O'chirish"><i class="fa-solid fa-xmark"></i></button>`;
+    chip.querySelector('button').addEventListener('click', onRemove);
+    wrap.appendChild(chip);
+}
+
+// ── Render movies ──
+const grid = document.getElementById('movies-grid');
+
+function renderMovies() {
+    const start = (state.page - 1) * MOVIES_PER_PAGE;
+    const pageItems = filteredMovies.slice(start, start + MOVIES_PER_PAGE);
+
+    if (pageItems.length === 0) {
+        grid.innerHTML = `<div class="no-results"><i class="fa-solid fa-film"></i><p>Hech qanday kino topilmadi</p></div>`;
+        return;
+    }
+
+    grid.innerHTML = pageItems.map((m, i) => {
+        const globalIdx = start + i;
+        const cats = m.categories.split('|').filter(c => c && c !== 'Uncategorized').slice(0, 2);
+        const rating = m.imdb_rating ? m.imdb_rating.toFixed(1) : '–';
+        const thumb = getThumbnail(m);
+        const fallback = getFallbackThumb(m);
+        return `
+        <div class="movie-card" data-idx="${globalIdx}" onclick="openDetail(filteredMovies[${globalIdx}])">
+            <div class="movie-card-img-wrap">
+                <img src="${thumb}" alt="${escHtml(m.title)}" loading="lazy"
+                     data-fallback="${fallback}"
+                     onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback=''}else{this.style.display='none';this.parentElement.style.minHeight='140px';this.parentElement.style.background='#1a1a1a';}">
+                <div class="card-rating"><i class="fa-solid fa-star" style="color:#f5c518;font-size:10px;"></i> ${rating}</div>
+            </div>
+            <div class="movie-card-body">
+                <div class="movie-card-title">${escHtml(m.title)}</div>
+                <div class="movie-card-meta">
+                    <span><i class="fa-solid fa-calendar"></i> ${m.movie_year || '–'}</span>
+                    <span><i class="fa-solid fa-clock"></i> ${m.movie_duration || '–'}</span>
+                </div>
+                <div class="movie-card-cats">
+                    ${cats.map(c => `<span class="cat-tag">${c}</span>`).join('')}
+                </div>
+                <button class="card-detail-btn">Batafsil ko'rish</button>
+            </div>
+        </div>`;
+    }).join('');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Pagination ──
+const paginationWrap = document.getElementById('pagination');
+
+function renderPagination() {
+    const total = Math.ceil(filteredMovies.length / MOVIES_PER_PAGE);
+    if (total <= 1) { paginationWrap.innerHTML = ''; return; }
+
+    const p = state.page;
+    let html = '';
+
+    html += `<button class="page-btn" ${p===1?'disabled':''} onclick="goPage(${p-1})"><i class="fa-solid fa-chevron-left"></i></button>`;
+
+    const pages = getPageRange(p, total);
+    pages.forEach(pg => {
+        if (pg === '...') { html += `<span class="page-dots">…</span>`; }
+        else { html += `<button class="page-btn ${pg===p?'active':''}" onclick="goPage(${pg})">${pg}</button>`; }
+    });
+
+    html += `<button class="page-btn" ${p===total?'disabled':''} onclick="goPage(${p+1})"><i class="fa-solid fa-chevron-right"></i></button>`;
+    paginationWrap.innerHTML = html;
+}
+
+function getPageRange(current, total) {
+    if (total <= 7) return Array.from({length: total}, (_, i) => i + 1);
+    const pages = [];
+    if (current <= 4) {
+        for (let i = 1; i <= 5; i++) pages.push(i);
+        pages.push('...'); pages.push(total);
+    } else if (current >= total - 3) {
+        pages.push(1); pages.push('...');
+        for (let i = total - 4; i <= total; i++) pages.push(i);
+    } else {
+        pages.push(1); pages.push('...');
+        for (let i = current - 1; i <= current + 1; i++) pages.push(i);
+        pages.push('...'); pages.push(total);
+    }
+    return pages;
+}
+
+window.goPage = function(p) {
+    state.page = p;
+    renderMovies();
+    renderPagination();
+};
+
+// ── Movie Detail Modal ──
+const detailModal    = document.getElementById('movie-detail-modal');
+const detailPoster   = document.getElementById('detail-poster');
+const detailTitle    = document.getElementById('detail-title');
+const detailMeta     = document.getElementById('detail-meta');
+const detailDesc     = document.getElementById('detail-desc');
+const detailAddBtn   = document.getElementById('detail-add-btn');
+const detailTrailerBtn = document.getElementById('detail-trailer-btn');
+const detailImdbBtn  = document.getElementById('detail-imdb-btn');
+const closeDetailBtn = document.getElementById('close-detail-modal');
+
+let currentMovie = null;
+
+window.openDetail = function(m) {
+    currentMovie = m;
+    const id = getYtId(m);
+    const img = id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : (m.movie_max_image || m.movie_medium_image || '');
+    const imgFallback = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
+    const cats = m.categories.split('|').filter(c => c && c !== 'Uncategorized');
+    const rating = m.imdb_rating ? m.imdb_rating.toFixed(1) : '–';
+
+    detailPoster.src = img;
+    detailPoster.alt = m.title;
+    detailPoster.dataset.fallback = imgFallback;
+    detailPoster.onerror = function() {
+        if (this.dataset.fallback) { this.src = this.dataset.fallback; this.dataset.fallback = ''; }
+        else { this.style.display = 'none'; }
+    };
+    detailTitle.textContent = m.fulltitle || m.title;
+    detailDesc.textContent = m.summary || 'Tavsif mavjud emas.';
+
+    detailMeta.innerHTML = `
+        <span class="meta-badge imdb"><i class="fa-solid fa-star"></i> ${rating}/10</span>
+        <span class="meta-badge"><i class="fa-solid fa-calendar"></i> ${m.movie_year || '–'}</span>
+        <span class="meta-badge"><i class="fa-solid fa-clock"></i> ${m.movie_duration || '–'}</span>
+        <span class="meta-badge"><i class="fa-solid fa-language"></i> ${m.movie_language || '–'}</span>
+        ${cats.map(c => `<span class="meta-badge"><i class="fa-solid fa-film"></i> ${c}</span>`).join('')}
+    `;
+
+    detailTrailerBtn.href = m.movie_youtube_id || '#';
+    detailImdbBtn.href = m.movie_imdb_link || '#';
+
+    const inCart = isInCart(m.title);
+    detailAddBtn.innerHTML = inCart
+        ? '<i class="fa-solid fa-check"></i> Savatda bor'
+        : '<i class="fa-solid fa-basket-shopping"></i> Savatga qo\'shish';
+    detailAddBtn.className = inCart ? 'btn-add-modal added' : 'btn-add-modal';
+
+    detailModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+};
+
+function closeDetail() {
+    detailModal.classList.remove('open');
+    document.body.style.overflow = '';
+}
+closeDetailBtn.addEventListener('click', closeDetail);
+detailModal.addEventListener('click', e => { if (e.target === detailModal) closeDetail(); });
+
+detailAddBtn.addEventListener('click', function() {
+    if (currentMovie && !isInCart(currentMovie.title)) {
+        const cats = currentMovie.categories.split('|').filter(c => c && c !== 'Uncategorized');
+        cart.push({
+            title: currentMovie.title,
+            img: getThumbnail(currentMovie),
+            genre: cats[0] || ''
+        });
+        saveCart();
+        updateCartUI();
+        this.innerHTML = '<i class="fa-solid fa-check"></i> Savatda bor';
+        this.className = 'btn-add-modal added';
+    }
+});
+
+// ── Search ──
+const mainSearch = document.getElementById('main-search');
+const clearBtn   = document.getElementById('search-clear-btn');
+const voiceBtn   = document.getElementById('voice-btn');
+const voiceStatus = document.getElementById('voice-status');
+
+let searchTimer;
+function onSearch(val) {
+    state.search = val;
+    clearBtn.classList.toggle('visible', val.length > 0);
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applyFilters, 300);
+}
+
+mainSearch.addEventListener('input', e => onSearch(e.target.value));
+clearBtn.addEventListener('click', () => {
+    mainSearch.value = '';
+    onSearch('');
+    mainSearch.focus();
+});
+
+// ── Voice search ──
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'uz-UZ';
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+
+    voiceBtn.addEventListener('click', () => {
+        if (voiceBtn.classList.contains('listening')) {
+            recognition.stop();
+        } else {
+            recognition.start();
+        }
+    });
+
+    recognition.onstart = () => {
+        voiceBtn.classList.add('listening');
+        voiceStatus.innerHTML = '<i class="fa-solid fa-circle" style="font-size:8px;"></i> Ovoz eshitilmoqda...';
+        mainSearch.placeholder = 'Gapirishni boshlang...';
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = Array.from(event.results)
+            .map(r => r[0].transcript)
+            .join('');
+        mainSearch.value = transcript;
+        onSearch(transcript);
+
+        if (event.results[0].isFinal) {
+            voiceStatus.innerHTML = `<i class="fa-solid fa-check"></i> Topildi: "${transcript}"`;
+        } else {
+            voiceStatus.innerHTML = `<i class="fa-solid fa-circle" style="font-size:8px;"></i> ${transcript}`;
+        }
+    };
+
+    recognition.onend = () => {
+        voiceBtn.classList.remove('listening');
+        mainSearch.placeholder = 'Kino nomini kiriting...';
+        setTimeout(() => { voiceStatus.textContent = ''; }, 3000);
+    };
+
+    recognition.onerror = (event) => {
+        voiceBtn.classList.remove('listening');
+        mainSearch.placeholder = 'Kino nomini kiriting...';
+        const errors = {
+            'not-allowed': 'Mikrofon ruxsati berilmagan',
+            'no-speech':   'Ovoz aniqlanmadi, qayta urinib ko\'ring',
+            'network':     'Tarmoq xatosi',
+        };
+        voiceStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${errors[event.error] || 'Xato yuz berdi'}`;
+        setTimeout(() => { voiceStatus.textContent = ''; }, 4000);
+    };
+} else {
+    voiceBtn.title = 'Brauzer ovozli qidiruvni qo\'llab-quvvatlamaydi';
+    voiceBtn.style.opacity = '0.3';
+    voiceBtn.style.cursor = 'not-allowed';
+    voiceBtn.addEventListener('click', () => {
+        voiceStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Ovozli qidiruv uchun Chrome ishlatins';
+        setTimeout(() => { voiceStatus.textContent = ''; }, 4000);
+    });
+}
+
+// ── Sort ──
+document.getElementById('sort-select').addEventListener('change', e => {
+    state.sort = e.target.value;
+    applyFilters();
+});
+
+// ── Year ──
+yearSelect.addEventListener('change', e => {
+    state.year = e.target.value;
+    applyFilters();
+});
+
+// ── Rating slider ──
+const ratingSlider = document.getElementById('rating-slider');
+const ratingVal    = document.getElementById('rating-val');
+ratingSlider.addEventListener('input', e => {
+    state.minRating = parseFloat(e.target.value);
+    ratingVal.textContent = state.minRating;
+    applyFilters();
+});
+
+// ── Reset ──
+document.getElementById('reset-filters-btn').addEventListener('click', () => {
+    state.search = ''; state.categories.clear(); state.minRating = 0; state.year = ''; state.sort = 'rating_desc';
+    mainSearch.value = '';
+    document.getElementById('sort-select').value = 'rating_desc';
+    yearSelect.value = '';
+    ratingSlider.value = 0; ratingVal.textContent = '0';
+    clearBtn.classList.remove('visible');
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    applyFilters();
+});
+
+// ── Keyboard ──
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeDetail(); closeCart(); }
+});
+
+// ── Init ──
+applyFilters();
+</script>
+</body>
+</html>
