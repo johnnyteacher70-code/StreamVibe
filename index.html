@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreamVibe — Kino Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,13 +14,14 @@
             padding: 0;
             box-sizing: border-box;
         }
+        ul { margin-bottom: 0; }
         html {
             scroll-behavior: smooth;
         }
         body {
             background-color: #0f0f0f;
             color: #ffffff;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
         }
 
@@ -92,105 +94,178 @@
 
   
         .site-header {
-            background-color: rgba(10, 10, 10, 0.95);
-            border-bottom: 1px solid #1f1f1f;
-            padding: 12px 40px;
+            background: linear-gradient(180deg, rgba(4,4,4,0.98) 0%, rgba(10,10,10,0.96) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0 48px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            height: 68px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.5);
         }
         .logo a {
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
             text-decoration: none;
+            transition: filter 0.3s;
         }
-        .logo a span { color: #e50000; }
+        .logo a:hover {
+            filter: drop-shadow(0 0 10px rgba(229,0,0,0.45));
+        }
+        .logo img { height: 34px; }
 
         .nav-container {
-            background-color: #060606;
-            border: 1px solid #1f1f1f;
-            border-radius: 12px;
-            padding: 6px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 5px;
         }
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 5px;
+            gap: 2px;
         }
         .nav-link {
-            color: #bfbfbf;
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: all 0.3s;
+            padding: 9px 18px;
+            border-radius: 10px;
+            transition: all 0.25s;
+            letter-spacing: 0.2px;
+            display: block;
         }
-        .nav-link:hover, .nav-link.active {
-            color: #ffffff;
-            background-color: #1a1a1a;
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+        }
+        .nav-link.active {
+            color: #fff;
+            background: rgba(229,0,0,0.18);
+            box-shadow: inset 0 0 0 1px rgba(229,0,0,0.35);
         }
 
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 8px;
         }
         .icon-btn {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.65);
+            font-size: 15px;
             cursor: pointer;
-            padding: 6px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
             position: relative;
         }
-        .icon-btn:hover { color: #e50000; }
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.15);
+            color: #fff;
+        }
 
         #cart-count {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background-color: #e50000;
-            font-size: 10px;
-            padding: 2px 6px;
+            top: -5px;
+            right: -5px;
+            background: #e50000;
+            font-size: 9px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #060606;
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 26px;
+            background: rgba(255,255,255,0.09);
+            margin: 0 4px;
         }
 
         .auth-btn {
-            background-color: #e50000;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background: linear-gradient(135deg, #e50000 0%, #b30000 100%);
+            padding: 9px 22px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: 0.3s;
+            font-size: 13px;
+            font-weight: 600;
             border: none;
-            color: white;
+            color: #fff;
+            transition: all 0.25s;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 14px rgba(229,0,0,0.28);
         }
-        .auth-btn:hover { background-color: #b30000; }
-        
+        .auth-btn:hover {
+            background: linear-gradient(135deg, #ff1a1a 0%, #cc0000 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(229,0,0,0.42);
+        }
+
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: #141414;
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid #262626;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px 14px 5px 6px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.25s;
+            cursor: default;
+        }
+        .user-profile:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #e50000, #ff4444);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        #user-name-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+            max-width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .logout-btn {
             background: transparent;
             border: none;
-            color: #757575;
+            color: rgba(255,255,255,0.3);
             cursor: pointer;
+            font-size: 13px;
+            line-height: 1;
+            padding: 2px;
+            transition: color 0.2s;
         }
+        .logout-btn:hover { color: #e50000; }
 
   
         /* ── Hero Carousel ── */
@@ -548,19 +623,254 @@
         }
 
      
+        /* ── Login Modal ── */
         .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.72);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .modal-content {
-            background: #141414; border: 1px solid #262626; padding: 30px; border-radius: 12px;
-            width: 100%; max-width: 400px; position: relative;
+            background: linear-gradient(160deg, #1a1a1a 0%, #111 100%);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 22px;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04);
+            animation: modalPop 0.32s cubic-bezier(0.34, 1.46, 0.64, 1);
         }
-        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 20px; cursor: pointer; color: #999; }
-        .modal input {
-            width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #262626;
-            border-radius: 6px; color: white; margin-bottom: 15px; outline: none;
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.86) translateY(24px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
         }
+        .modal-accent {
+            height: 3px;
+            background: linear-gradient(90deg, #b30000, #e50000, #ff6060, #e50000, #b30000);
+            background-size: 300% 100%;
+            animation: accentFlow 4s linear infinite;
+        }
+        @keyframes accentFlow {
+            0%   { background-position: 0% 0; }
+            100% { background-position: 300% 0; }
+        }
+        .modal-body {
+            padding: 36px 36px 32px;
+        }
+        .modal-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(229,0,0,0.1);
+            border: 1px solid rgba(229,0,0,0.22);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #e50000;
+            margin-bottom: 22px;
+        }
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+        .modal-subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 28px;
+            line-height: 1.55;
+        }
+        .modal-input-wrap {
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .modal-input-wrap i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.28);
+            font-size: 14px;
+            pointer-events: none;
+            transition: color 0.25s;
+        }
+        .modal-input-wrap:focus-within i { color: #e50000; }
+        .modal-input-wrap input {
+            width: 100%;
+            padding: 14px 14px 14px 42px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.25s;
+        }
+        .modal-input-wrap input::placeholder { color: rgba(255,255,255,0.22); }
+        .modal-input-wrap input:focus {
+            border-color: rgba(229,0,0,0.5);
+            background: rgba(229,0,0,0.05);
+            box-shadow: 0 0 0 3px rgba(229,0,0,0.1);
+        }
+        .modal-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #e50000, #b30000);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 18px rgba(229,0,0,0.32);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+        }
+        .modal-submit:hover {
+            background: linear-gradient(135deg, #ff1a1a, #cc0000);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 28px rgba(229,0,0,0.42);
+        }
+        .modal-submit:active { transform: translateY(0); }
+        .modal-note {
+            text-align: center;
+            font-size: 11.5px;
+            color: rgba(255,255,255,0.2);
+            margin-top: 20px;
+            line-height: 1.55;
+        }
+        .modal-note a { color: rgba(255,255,255,0.35); text-decoration: none; }
+        .modal-note a:hover { color: #e50000; }
+        .close-modal {
+            position: absolute;
+            top: 14px; right: 14px;
+            width: 32px; height: 32px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: rgba(255,255,255,0.45);
+            font-size: 14px;
+            transition: all 0.2s;
+            z-index: 1;
+            line-height: 1;
+        }
+        .close-modal:hover {
+            background: rgba(229,0,0,0.14);
+            border-color: rgba(229,0,0,0.3);
+            color: #e50000;
+        }
+        /* Modal tabs */
+        .modal-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 26px;
+            gap: 3px;
+        }
+        .modal-tab {
+            flex: 1;
+            padding: 9px;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .modal-tab.active {
+            background: rgba(229,0,0,0.18);
+            color: #fff;
+            box-shadow: inset 0 0 0 1px rgba(229,0,0,0.3);
+        }
+        .modal-form { display: none; }
+        .modal-form.active { display: block; }
+        /* Avatar */
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 22px;
+            gap: 10px;
+        }
+        .avatar-circle {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: rgba(229,0,0,0.08);
+            border: 2px dashed rgba(229,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: rgba(229,0,0,0.45);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+        }
+        .avatar-circle:hover { border-color: #e50000; background: rgba(229,0,0,0.14); }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-hover {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.52);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.25s;
+            font-size: 17px; color: #fff;
+        }
+        .avatar-circle:hover .avatar-hover { opacity: 1; }
+        .avatar-label { font-size: 11.5px; color: rgba(255,255,255,0.3); }
+        /* 2-col row */
+        .modal-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        /* Password toggle */
+        .pass-toggle {
+            position: absolute;
+            right: 13px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: rgba(255,255,255,0.28);
+            cursor: pointer; font-size: 14px;
+            padding: 2px; transition: color 0.2s;
+        }
+        .pass-toggle:hover { color: rgba(255,255,255,0.65); }
+        .modal-input-wrap input.has-toggle { padding-right: 42px; }
+        /* Error / success */
+        .modal-msg {
+            font-size: 12.5px;
+            padding: 10px 13px;
+            border-radius: 9px;
+            margin-bottom: 14px;
+            display: none;
+            line-height: 1.5;
+        }
+        .modal-msg.error  { display: block; background: rgba(229,0,0,0.1); border: 1px solid rgba(229,0,0,0.25); color: #ff7070; }
+        .modal-msg.success{ display: block; background: rgba(26,122,26,0.12); border: 1px solid rgba(26,122,26,0.3); color: #6ee06e; }
         /* --- Savat Sidebar --- */
         .cart-overlay {
             position: fixed;
@@ -890,15 +1200,15 @@
     
     <header class="site-header">
         <div class="logo">
-            <a href="#home"><img src="./Logo.png" alt="StreamVibe" style="height:36px;"></a>
+            <a href="#home"><img src="./Logo.png" alt="StreamVibe"></a>
         </div>
 
         <nav class="nav-container">
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link active">Bosh sahifa</a></li>
                 <li><a href="./movie.html" class="nav-link">Barcha Kinolar</a></li>
-                <li><a href="#faq" class="nav-link">Qo'llab-quvvatlash</a></li>
-                <li><a href="#pricing" class="nav-link">Tariflar</a></li>
+                <li><a href="./support.html" class="nav-link">Qo'llab-quvvatlash</a></li>
+                <li><a href="./pricing.html" class="nav-link">Tariflar</a></li>
             </ul>
         </nav>
 
@@ -907,10 +1217,11 @@
                 <i class="fa-solid fa-basket-shopping"></i>
                 <span id="cart-count">0</span>
             </button>
-            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
-            <div id="login-trigger" class="auth-btn">Kirish</div>
+            <button class="icon-btn" title="Bildirishnomalar"><i class="fa-regular fa-bell"></i></button>
+            <div class="header-divider"></div>
+            <div id="login-trigger" class="auth-btn">Ro'yxatdan o'tish</div>
             <div id="user-display" class="user-profile" style="display: none;">
-                <i class="fa-solid fa-user"></i>
+                <div class="user-avatar" id="user-avatar-el"><i class="fa-solid fa-user"></i></div>
                 <span id="user-name-text">Ism</span>
                 <button id="logout-trigger" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
@@ -949,10 +1260,6 @@
                         <p class="hero-desc">
                             Omon qolgan Qasoskorlar insoniyatni qutqarish va Thanosning qilgan ishlarini ortga qaytarish uchun so'nggi va eng xavfli missiyani boshlaydilar. Film davomida ular katta qurbonliklar, do'stlik, jasorat va vaqt bilan bog'liq murakkab sinovlarga duch kelishadi. Yakunda esa Marvel tarixidagi eng ulkan janglardan biri yuz beradi
                         </p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('Interstellar')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('Interstellar', './Interstellar kino.jpg', 'Ilmiy-fantastik / Drama', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
@@ -969,10 +1276,6 @@
                         </div>
                         <h1 class="hero-title">Batman (2022)</h1>
                         <p class="hero-desc">Gotham shahrida yangi Batman paydo bo'ladi. Riddlerning sirli xabarlarini hal qilish uchun u shaharning eng qorong'u tomoniga sho'ng'iydi.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('Batman (2022)')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('Batman (2022)', './betman 2022.jpg', 'Jangari / Detektiv', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
@@ -988,10 +1291,6 @@
                         </div>
                         <h1 class="hero-title">Interstellar</h1>
                         <p class="hero-desc">Yer sayyorasi ekologik inqirozga yuz tutib, insoniyat yo'q bo'lib ketish xavfi ostida qoladi. Sobiq NASA uchuvchisi Cooper boshchiligidagi kichik guruh insoniyat uchun yangi yashash mumkin bo'lgan sayyorani topish maqsadida koinotning eng uzoq hududlariga yo'l oladi. Ular vaqtning nisbiyligi, qora tuynuklar va insoniyat taqdiri bilan bog'liq murakkab sinovlarga duch keladilar.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('Gladiator 2')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('Gladiator 2', './gladiator 2.png', 'Jangari / Tarixiy', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
@@ -1007,10 +1306,6 @@
                         </div>
                         <h1 class="hero-title">Spider-Man</h1>
                         <p class="hero-desc">Uchta Spider-Man birlashadi. Parallel olamlardan kelgan eng xavfli yovuzlar bilan yuzma-yuz to'qnashuvda Peter Parker o'zini sinab ko'radi.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('Spider-Man')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('Spider-Man', './spider-man.jpg', 'Jangari / Sarguzasht', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
@@ -1026,10 +1321,6 @@
                         </div>
                         <h1 class="hero-title">Ford VS Ferrari</h1>
                         <p class="hero-desc">1966 yil Le Mans poygasi. Caroll Shelby va Ken Miles 24 soatlik poyga tarixini o'zgartirish uchun imkonsizga ko'ringan vazifani bajarishga urinadi.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('Ford v Ferrari')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('Ford v Ferrari', './ford vs ferrari kino.jpg', 'Sport / Drama', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
@@ -1045,10 +1336,6 @@
                         </div>
                         <h1 class="hero-title">F1</h1>
                         <p class="hero-desc">Formula 1 dunyosining sahna ortidagi shon-sharaf va tragediyalari. Haqiqiy F1 jamoalari bilan hamkorlikda suratga olingan, yurak urib ketadigan poyga draması.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('F1')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('F1', './f1 kino.jpg', 'Sport / Drama', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
@@ -1064,29 +1351,21 @@
                         </div>
                         <h1 class="hero-title">Iron Man</h1>
                         <p class="hero-desc">Milliarder Tony Stark asirlikda zirhli kostyum yaratadi va Iron Man ga aylanadi. Marvel kino olamining barchaga ma'lum boshlang'ich nuqtasi.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('Iron Man')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('Iron Man', './железный человек kino.jpg', 'Jangari / Ilmiy-fantastik', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Slide 8: London Has Fallen -->
-                <div class="carousel-item" style="background-image:url('./london has fallen movie wallper.jpg');">
+                <div class="carousel-item" style="background-image:url('./sonic.png');">
                     <div class="hero-slide-overlay"></div>
                     <div class="hero-slide-content">
                         <div class="hero-badges">
-                            <span class="hero-badge rating"><i class="fa-solid fa-star"></i> 5.9/10</span>
+                            <span class="hero-badge rating"><i class="fa-solid fa-star"></i> 8.5/10</span>
                             <span class="hero-badge year">2016</span>
-                            <span class="hero-badge genre">Jangari / Triller</span>
-                            <span class="hero-badge"><i class="fa-solid fa-clapperboard" style="font-size:10px;"></i> Babak Najafi</span>
+                            <span class="hero-badge genre">Komediya/ Sarguzasht</span>
+                            <span class="hero-badge"><i class="fa-solid fa-clapperboard" style="font-size:10px;"></i> Jeff Fowler</span>
                         </div>
-                        <h1 class="hero-title">London Has Fallen</h1>
-                        <p class="hero-desc">London shahri terrorchilar tomonidan hujumga uchradi. AQSh prezidenti va uning muhofazachisi maqsadli o'ldirish tahdididan omon qolishga harakat qiladi.</p>
-                        <div class="hero-actions">
-                            <button class="hero-btn-primary" onclick="openMovieDetail('London Has Fallen')"><i class="fa-solid fa-play"></i> Batafsil</button>
-                            <button class="hero-btn-secondary" onclick="addHeroToCart('London Has Fallen', './london has fallen movie wallper.jpg', 'Jangari / Triller', this)"><i class="fa-solid fa-basket-shopping"></i> Savatga qo'shish</button>
-                        </div>
+                        <h1 class="hero-title">Sonic 2</h1>
+                        <p class="hero-desc">Sonic endi haqiqiy qahramon bo'lishga harakat qilmoqda. Shu paytda uning eski dushmani Doctor Robotnik kuchli jangchi Knuckles bilan qaytib keladi. Ular butun dunyoni boshqarishga qodir bo'lgan sirli zumradni izlay boshlashadi. Sonic esa yangi do'sti Tails bilan birgalikda ularni to'xtatish uchun xavfli sarguzashtga otlanadi.</p>
                     </div>
                 </div>
 
@@ -1389,11 +1668,49 @@
     </footer>
 
     <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span id="close-login" class="close-modal">&times;</span>
-            <h3>Tizimga kirish</h3>
-            <input type="text" id="username-input" placeholder="Ismingizni kiriting..." required>
-            <button id="login-submit-btn" class="auth-btn" style="width:100%;">Kirish</button>
+        <div class="modal-content" style="max-width:460px;">
+            <span id="close-login" class="close-modal"><i class="fa-solid fa-xmark"></i></span>
+            <div class="modal-accent"></div>
+            <div class="modal-body">
+                <div class="modal-header-info" style="margin-bottom:24px;">
+                    <div class="modal-icon"><i class="fa-solid fa-user-plus"></i></div>
+                    <h3 class="modal-title">Ro'yxatdan o'tish</h3>
+                    <p class="modal-subtitle">StreamVibe'da hisob yarating va minglab kinolardan bahramand bo'ling.</p>
+                </div>
+                <div class="modal-msg" id="reg-msg"></div>
+                <div class="avatar-section">
+                    <div class="avatar-circle" id="avatar-preview-circle" onclick="document.getElementById('avatar-input').click()">
+                        <i class="fa-solid fa-user" id="avatar-icon"></i>
+                        <img id="avatar-preview-img" src="" alt="" style="display:none;">
+                        <div class="avatar-hover"><i class="fa-solid fa-camera"></i></div>
+                    </div>
+                    <input type="file" id="avatar-input" accept="image/*" hidden>
+                    <span class="avatar-label">Profil rasm yuklash (ixtiyoriy)</span>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-input-wrap">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="reg-firstname" placeholder="Ism...">
+                    </div>
+                    <div class="modal-input-wrap">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="reg-lastname" placeholder="Familiya...">
+                    </div>
+                </div>
+                <div class="modal-input-wrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="reg-email" placeholder="Email manzilingiz...">
+                </div>
+                <div class="modal-input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="reg-password" placeholder="Parol (kamida 6 ta belgi)..." class="has-toggle">
+                    <button type="button" class="pass-toggle" data-target="reg-password"><i class="fa-solid fa-eye"></i></button>
+                </div>
+                <button id="register-submit-btn" class="modal-submit">
+                    <i class="fa-solid fa-user-plus"></i> Ro'yxatdan o'tish
+                </button>
+                <p class="modal-note" style="margin-top:16px;">Ro'yxatdan o'tish orqali siz <a href="#">foydalanish shartlari</a> va <a href="#">maxfiylik siyosatini</a> qabul qilasiz.</p>
+            </div>
         </div>
     </div>
 
@@ -1533,43 +1850,112 @@
 
         updateCartUI();
 
-        // --- Login ---
-        const loginTrigger   = document.getElementById('login-trigger');
-        const userDisplay    = document.getElementById('user-display');
-        const userNameText   = document.getElementById('user-name-text');
-        const logoutTrigger  = document.getElementById('logout-trigger');
-        const loginModal     = document.getElementById('login-modal');
-        const closeLogin     = document.getElementById('close-login');
-        const loginSubmitBtn = document.getElementById('login-submit-btn');
-        const usernameInput  = document.getElementById('username-input');
+        // ── Auth tizimi ──
+        const USERS_KEY    = 'sv_users';
+        const CURRENT_KEY  = 'sv_current';
+        const getUsers     = () => JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+        const getCurrentUser = () => JSON.parse(localStorage.getItem(CURRENT_KEY));
+        const saveUsers    = u  => localStorage.setItem(USERS_KEY, JSON.stringify(u));
+        const saveCurrentUser = u => localStorage.setItem(CURRENT_KEY, JSON.stringify(u));
 
-        const savedName = localStorage.getItem('username');
-        if (savedName) showUserHeader(savedName);
+        const loginTrigger  = document.getElementById('login-trigger');
+        const userDisplay   = document.getElementById('user-display');
+        const userNameText  = document.getElementById('user-name-text');
+        const userAvatarEl  = document.getElementById('user-avatar-el');
+        const logoutTrigger = document.getElementById('logout-trigger');
+        const loginModal    = document.getElementById('login-modal');
+        const closeLogin    = document.getElementById('close-login');
 
+        // Modal ochish/yopish
         loginTrigger.addEventListener('click', () => loginModal.style.display = 'flex');
-        closeLogin.addEventListener('click', () => loginModal.style.display = 'none');
+        closeLogin.addEventListener('click',   () => { loginModal.style.display = 'none'; clearMsg(); });
+        window.onclick = function(e) {
+            if (e.target == loginModal) { loginModal.style.display = 'none'; clearMsg(); }
+            if (e.target == detailModal) closeDetailModal();
+        };
 
-        loginSubmitBtn.addEventListener('click', () => {
-            const name = usernameInput.value.trim();
-            if (name) {
-                localStorage.setItem('username', name);
-                showUserHeader(name);
-                loginModal.style.display = 'none';
-                usernameInput.value = '';
-            }
+        // Parol ko'rsatish
+        document.querySelectorAll('.pass-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inp = document.getElementById(btn.dataset.target);
+                inp.type = inp.type === 'text' ? 'password' : 'text';
+                btn.querySelector('i').className = inp.type === 'text' ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+            });
         });
 
-        function showUserHeader(name) {
-            loginTrigger.style.display = 'none';
-            userDisplay.style.display = 'flex';
-            userNameText.textContent = name;
-        }
+        // Avatar yuklash
+        let avatarBase64 = '';
+        document.getElementById('avatar-input').addEventListener('change', function() {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                avatarBase64 = e.target.result;
+                const img = document.getElementById('avatar-preview-img');
+                img.src = avatarBase64;
+                img.style.display = 'block';
+                document.getElementById('avatar-icon').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        });
 
+        // Ro'yxatdan o'tish
+        document.getElementById('register-submit-btn').addEventListener('click', () => {
+            const firstName = document.getElementById('reg-firstname').value.trim();
+            const lastName  = document.getElementById('reg-lastname').value.trim();
+            const email     = document.getElementById('reg-email').value.trim();
+            const password  = document.getElementById('reg-password').value;
+            if (!firstName || !lastName || !email || !password) {
+                showMsg('Barcha maydonlarni to\'ldiring!', 'error'); return;
+            }
+            if (password.length < 6) {
+                showMsg('Parol kamida 6 ta belgidan iborat bo\'lishi kerak!', 'error'); return;
+            }
+            const users = getUsers();
+            if (users.find(u => u.email === email)) {
+                showMsg('Bu email allaqachon ro\'yxatdan o\'tgan!', 'error'); return;
+            }
+            const newUser = { firstName, lastName, email, password, avatar: avatarBase64 };
+            users.push(newUser);
+            saveUsers(users);
+            saveCurrentUser(newUser);
+            showUserInHeader(newUser);
+            loginModal.style.display = 'none';
+            clearMsg();
+            avatarBase64 = '';
+        });
+
+        // Chiqish
         logoutTrigger.addEventListener('click', () => {
-            localStorage.removeItem('username');
+            localStorage.removeItem(CURRENT_KEY);
             userDisplay.style.display = 'none';
             loginTrigger.style.display = 'block';
         });
+
+        function showUserInHeader(user) {
+            loginTrigger.style.display = 'none';
+            userDisplay.style.display = 'flex';
+            userNameText.textContent = user.firstName + ' ' + user.lastName;
+            if (user.avatar) {
+                userAvatarEl.innerHTML = `<img src="${user.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+            } else {
+                const ini = (user.firstName[0] + (user.lastName[0] || '')).toUpperCase();
+                userAvatarEl.innerHTML = `<span style="font-size:11px;font-weight:700;">${ini}</span>`;
+            }
+        }
+        function showMsg(text, type) {
+            const el = document.getElementById('reg-msg');
+            el.textContent = text;
+            el.className = 'modal-msg ' + type;
+        }
+        function clearMsg() {
+            const el = document.getElementById('reg-msg');
+            if (el) { el.className = 'modal-msg'; el.textContent = ''; }
+        }
+
+        // Sahifa yuklanganda
+        const curUser = getCurrentUser();
+        if (curUser) showUserInHeader(curUser);
 
         // --- FAQ ---
         document.querySelectorAll('.faq-trigger').forEach(trigger => {
@@ -1591,10 +1977,6 @@
             });
         });
 
-        window.onclick = function(e) {
-            if (e.target == loginModal) loginModal.style.display = 'none';
-            if (e.target == detailModal) closeDetailModal();
-        };
 
         // --- Kino tafsilot modali ---
         const detailModal    = document.getElementById('movie-detail-modal');
