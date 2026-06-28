@@ -196,6 +196,13 @@
 </div>
 
 <script>
+    // Ro'yxatdan o'tgan foydalanuvchi ma'lumotlarini yuklash
+    const currentUser = JSON.parse(localStorage.getItem('sv_current'));
+    if (currentUser) {
+        document.getElementById('fullname').value = (currentUser.firstName || '') + ' ' + (currentUser.lastName || '');
+        document.getElementById('login').value    = currentUser.email || '';
+    }
+
     document.getElementById('cardNumber').addEventListener('input', function(e) {
         e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
     });
